@@ -30,6 +30,34 @@ matrix:
         - LDFLAGS="-L$(brew --prefix)/opt/libressl/lib"
         - CPPFLAGS="-I$(brew --prefix)/opt/libressl/include"
     # gcc is actually clang on OSX, so pointless to test twice
+    
+    # adding script to test on power systems
+    - compiler: gcc
+      os: linux
+      dist: xenial
+      arch: ppc64le
+    - compiler: clang
+      os: linux
+      dist: xenial
+      arch: ppc64le
+    - compiler: gcc
+      os: linux
+      dist: bionic
+      arch: ppc64le
+    - compiler: clang
+      os: linux
+      dist: bionic
+      arch: ppc64le
+    - compiler: coverity
+      os: linux
+      arch: ppc64le
+      env:
+        - COVERITY_SCAN_PROJECT_NAME="$TRAVIS_REPO_SLUG"
+        - COVERITY_SCAN_BRANCH_PATTERN="master"
+        - COVERITY_SCAN_NOTIFICATION_EMAIL="grobian@gentoo.org"
+        - COVERITY_SCAN_BUILD_COMMAND="make"
+    
+
 
 addons:
   apt:
